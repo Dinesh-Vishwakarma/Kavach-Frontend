@@ -1,0 +1,526 @@
+/* ========== RESET & BASE STYLES ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Smooth transitions for theme changes */
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Custom Cursor */
+body {
+    cursor: url('../images/custom-cursor-dark.png'), auto; /* Replace with your actual custom cursor image path */
+}
+body[data-theme="light"] {
+    cursor: url('../images/custom-cursor-light.png'), auto; /* Light mode cursor */
+}
+/* Fallback/standard cursor on interactive elements */
+a, button, input, textarea {
+    cursor: pointer;
+}
+
+
+/* ========== FONT IMPORTS (Ensure these are linked in HTML head) ========== */
+/* font-family: 'Montserrat', sans-serif; (for headings and bold text) */
+/* font-family: 'Roboto Mono', monospace; (for code-like elements or feature cards) */
+
+
+/* ========== CSS Variables (Theme-Dependent) ========== */
+:root {
+    /* --- Dark Theme Colors (Default) --- */
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Montserrat', sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+
+    --color-backdrop-start: #1a222c; /* Deep desaturated blue for subtle overlay */
+    --color-backdrop-end: #232d39;   /* Slightly lighter desaturated blue */
+
+    /* Glassmorphic Backgrounds (highly translucent) */
+    --color-glass-light-bg: rgba(255, 255, 255, 0.08); /* Very light, very translucent white/grey */
+    --color-glass-dark-bg: rgba(255, 255, 255, 0.03); /* Even more translucent for subtle elements */
+    --color-glass-input-bg: rgba(255, 255, 255, 0.06); /* For inputs */
+
+    /* Glassmorphic Borders (subtle) */
+    --color-glass-border-light: rgba(255, 255, 255, 0.15); /* More visible for main elements */
+    --color-glass-border-dark: rgba(255, 255, 255, 0.08); /* Subtler for inner elements */
+
+    /* Text Colors */
+    --color-text-primary: #e0e0e0; /* Light text for readability */
+    --color-text-secondary: #c0c0c0; /* Slightly muted text */
+    --color-text-accent: #6d9370; /* Muted earthy green for general accents */
+    --color-heading-primary: #a3dafe; /* Brighter, sophisticated blue for main headings */
+    --color-heading-shadow: rgba(163, 218, 254, 0.4); /* Matching blue glow for headings */
+
+    /* Accent Colors (Green/Blue for buttons) */
+    --color-accent-primary: #6d9370; /* Muted earthy green */
+    --color-accent-hover: #5b7e8d; /* Muted earthy blue on hover */
+
+    /* Shadows for Glassmorphism */
+    --color-shadow-light: rgba(0, 0, 0, 0.2); /* Soft inner shadow */
+    --color-shadow-dark: rgba(0, 0, 0, 0.4); /* Stronger outer shadow */
+}
+
+/* --- Light Theme Colors --- */
+[data-theme="light"] {
+    --color-backdrop-start: #e0f2f7; /* Light blue */
+    --color-backdrop-end: #b2e2ec;   /* Slightly darker light blue */
+
+    --color-glass-light-bg: rgba(255, 255, 255, 0.6); /* More opaque in light mode */
+    --color-glass-dark-bg: rgba(255, 255, 255, 0.4);
+    --color-glass-input-bg: rgba(255, 255, 255, 0.7);
+
+    --color-glass-border-light: rgba(0, 0, 0, 0.1);
+    --color-glass-border-dark: rgba(0, 0, 0, 0.05);
+
+    --color-text-primary: #333333; /* Dark text */
+    --color-text-secondary: #555555;
+    --color-text-accent: #3d7a4d; /* Darker green */
+    --color-heading-primary: #0056b3; /* Darker blue for headings */
+    --color-heading-shadow: rgba(0, 86, 179, 0.2); /* Muted dark blue glow */
+
+    --color-accent-primary: #4CAF50; /* Brighter green */
+    --color-accent-hover: #2196F3; /* Standard blue */
+
+    --color-shadow-light: rgba(0, 0, 0, 0.1);
+    --color-shadow-dark: rgba(0, 0, 0, 0.2);
+}
+
+body {
+    background: url('../images/wallpaper.png') no-repeat center center fixed;
+    background-size: cover;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    position: relative;
+    z-index: 0;
+    overflow-x: hidden;
+    font-family: var(--font-body); /* Apply font family */
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--color-backdrop-start), var(--color-backdrop-end));
+    opacity: 0.7;
+    z-index: -1;
+}
+
+/* ========== CODE RAIN EFFECT (CSS-only) ========== */
+.code-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -2; /* Below wallpaper overlay */
+    pointer-events: none; /* Allows clicks to pass through */
+    opacity: 0.3; /* Subtle */
+}
+
+.code-rain::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(0,255,0,0.1), transparent);
+    animation: rain 2s linear infinite;
+    transform-origin: top;
+    will-change: transform;
+}
+
+@keyframes rain {
+    0% { transform: translateY(-100%); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(100%); opacity: 0; }
+}
+
+
+/* ========== KEYFRAME ANIMATIONS ========== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInFromTop {
+    from { opacity: 0; transform: translateY(-50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Custom Animation for feature cards on hover */
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 10px var(--color-accent-primary-light-alpha), 0 0 20px var(--color-accent-primary-light-alpha); }
+    50% { box-shadow: 0 0 20px var(--color-accent-primary), 0 0 40px var(--color-accent-primary); }
+    100% { box-shadow: 0 0 10px var(--color-accent-primary-light-alpha), 0 0 20px var(--color-accent-primary-light-alpha); }
+}
+
+
+/* ========== NAVBAR ========== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--color-glass-light-bg); /* Use glass background */
+    border-bottom: 1px solid var(--color-glass-border-light);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 30px var(--color-shadow-dark);
+    animation: slideInFromTop 0.8s ease-out forwards;
+}
+
+.logo img {
+    width: 50px;
+    height: auto;
+    border-radius: 50%;
+    border: 2px solid var(--color-accent-primary);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-button .enroll-btn {
+    background-color: var(--color-accent-primary);
+    color: #fff;
+    padding: 0.6rem 1.4rem;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav-button .enroll-btn:hover {
+    background-color: var(--color-accent-hover);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: var(--color-glass-dark-bg);
+    border: 1px solid var(--color-glass-border-dark);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 5px var(--color-shadow-light);
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+    color: var(--color-text-primary);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    background: var(--color-glass-light-bg);
+}
+
+.theme-toggle .icon {
+    display: block; /* Default to block for proper alignment */
+}
+.theme-toggle .light-icon {
+    display: none; /* Hidden by default in dark theme */
+}
+[data-theme="light"] .theme-toggle .dark-icon {
+    display: none; /* Hidden in light theme */
+}
+[data-theme="light"] .theme-toggle .light-icon {
+    display: inline-block; /* Shown in light theme */
+}
+
+
+/* ========== MAIN CONTENT (Glassmorphic Container) ========== */
+.main-content {
+    padding: 3rem 2rem;
+    text-align: center;
+    margin: 3rem auto;
+    max-width: 900px;
+    overflow: hidden;
+
+    background: var(--color-glass-light-bg);
+    border: 1px solid var(--color-glass-border-light);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px var(--color-shadow-dark), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+}
+
+/* ENROLL NOW BUTTON (Creative Styling) */
+.cta-button {
+    background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-hover));
+    color: #fff;
+    padding: 0.9rem 2.2rem;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-bottom: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: inline-block;
+    text-decoration: none;
+
+    position: relative;
+    box-shadow:
+        0 0 20px var(--color-accent-primary), /* Stronger glow from primary accent */
+        0 8px 25px var(--color-shadow-dark); /* Deeper main shadow */
+    overflow: hidden;
+    z-index: 1;
+
+    transition: all 0.4s ease-in-out;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.15); /* Light shimmer */
+    border-radius: 50%;
+    transition: all 0.6s ease-out;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: -1;
+}
+
+.cta-button:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow:
+        0 0 30px var(--color-accent-hover), /* Stronger glow from hover accent */
+        0 12px 40px var(--color-shadow-dark);
+}
+
+.cta-button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+}
+
+.intro h1 {
+    font-family: var(--font-heading); /* Apply heading font */
+    font-size: 3.8rem;
+    color: var(--color-heading-primary);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow:
+        0 0 10px var(--color-heading-shadow),
+        0 0 20px var(--color-heading-shadow),
+        0 0 30px rgba(173, 216, 230, 0.2);
+    line-height: 1.2;
+    animation: fadeIn 1.2s ease-out forwards;
+    animation-delay: 0.8s;
+    opacity: 0;
+}
+
+.intro p {
+    font-family: var(--font-body);
+    max-width: 750px;
+    margin: 0 auto 3rem;
+    font-size: 1.15rem;
+    color: var(--color-text-secondary);
+    animation: fadeIn 1.5s ease-out forwards;
+    animation-delay: 1.2s;
+    opacity: 0;
+}
+
+/* ========== FEATURES SECTION (Glassmorphic Cards) ========== */
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.8rem;
+    margin-top: 3rem;
+}
+
+.feature-card {
+    background: var(--color-glass-dark-bg);
+    border: 1px solid var(--color-glass-border-dark);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 15px;
+    padding: 1.4rem 2rem;
+    width: 280px;
+    color: var(--color-text-primary);
+    font-weight: 600; /* Slightly less bold for elegance */
+    box-shadow: 0 4px 20px var(--color-shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    text-align: center;
+    font-size: 1.1rem;
+    font-family: var(--font-mono); /* Use mono font for a techy touch */
+    animation: scaleIn 0.8s ease-out forwards;
+    opacity: 0;
+    display: flex; /* For icon alignment */
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* Feature icon styling */
+.feature-icon {
+    font-size: 1.4em; /* Larger icon */
+    color: var(--color-accent-primary); /* Accent color for icons */
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.2) rotate(5deg); /* Subtle animation on icon hover */
+}
+
+/* Staggered animation delays */
+.features .feature-card:nth-child(1) { animation-delay: 1.6s; }
+.features .feature-card:nth-child(2) { animation-delay: 1.8s; }
+.features .feature-card:nth-child(3) { animation-delay: 2.0s; }
+.features .feature-card:nth-child(4) { animation-delay: 2.2s; }
+
+
+.feature-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 12px 35px var(--color-shadow-dark);
+    background: rgba(255, 255, 255, 0.08); /* Slightly less translucent on hover */
+}
+
+/* ========== FOOTER ========== */
+.footer {
+    color: var(--color-text-secondary);
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 5rem;
+
+    background: var(--color-glass-dark-bg); /* Use dark glass background */
+    border-top: 1px solid var(--color-glass-border-dark);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 -4px 20px var(--color-shadow-dark);
+    animation: fadeIn 0.8s ease-out forwards;
+    animation-delay: 2.5s;
+    opacity: 0;
+}
+
+.footer a {
+    color: var(--color-accent-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+    color: var(--color-accent-hover);
+}
+
+/* ========== ENROLLMENT FORM STYLES (Glassmorphic Form) ========== */
+.enroll-form {
+    max-width: 650px;
+    margin: 2.5rem auto 0;
+    padding: 2.5rem;
+    text-align: left;
+
+    background: var(--color-glass-light-bg);
+    border: 1px solid var(--color-glass-border-light);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px var(--color-shadow-dark), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+}
+
+.form-group {
+    margin-bottom: 1.8rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: var(--color-text-accent);
+    margin-bottom: 0.6rem;
+    font-size: 1.05rem;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.85rem;
+    border: 1px solid var(--color-glass-border-dark);
+    border-radius: 10px;
+    background-color: var(--color-glass-input-bg);
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    transition: border 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: var(--font-body); /* Apply body font */
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--color-text-secondary);
+    opacity: 0.7;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--color-accent-primary);
+    outline: none;
+    box-shadow: 0 0 15px rgba(109, 147, 112, 0.5), inset 0 0 0 1px var(--color-accent-primary);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.enroll-form .cta-button {
+    margin-top: 1.5rem;
+    width: auto;
+    padding: 0.9rem 2.5rem;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+/* Specific styling for the H1 on the enrollment page */
+.main-content h1 {
+    font-family: var(--font-heading); /* Apply heading font */
+    font-size: 3.8rem;
+    color: var(--color-heading-primary);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow:
+        0 0 10px var(--color-heading-shadow),
+        0 0 20px var(--color-heading-shadow),
+        0 0 30px rgba(173, 216, 230, 0.2);
+    line-height: 1.2;
+    animation: fadeIn 1.2s ease-out forwards;
+    animation-delay: 0.8s;
+    opacity: 0;
+}
+
+/* Adjustments for the small placeholder text on enroll page */
+.form-description { /* Changed from p[style="color:#aaa;"] to a class */
+    color: var(--color-text-secondary) !important;
+    margin-bottom: 2rem;
+    animation: fadeIn 1.5s ease-out forwards;
+    animation-delay: 1.2s;
+    opacity: 0;
+}

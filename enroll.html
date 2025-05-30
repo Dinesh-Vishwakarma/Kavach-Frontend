@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Kavach | Enrollment</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark"> <header class="navbar">
+        <div class="logo">
+            <img src="images/logo.png" alt="Team Kavach Logo">
+        </div>
+        <div class="nav-links"> <button id="theme-toggle" class="theme-toggle">
+                <span class="icon light-icon">☀️</span>
+                <span class="icon dark-icon">🌙</span>
+            </button>
+            <a href="index.html" class="enroll-btn">Home</a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <h1>Join Team Kavach</h1>
+        <p class="form-description">Fill in the form below to register. (Questions are temporary placeholders)</p>
+
+        <form class="enroll-form" action="#" method="POST">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your full name">
+            </div>
+
+            <div class="form-group">
+                <label for="email">VIT Email</label>
+                <input type="email" id="email" name="email" required placeholder="yourname@vitbhopal.ac.in">
+            </div>
+
+            <div class="form-group">
+                <label for="skills">Your Cybersecurity Skills</label>
+                <textarea id="skills" name="skills" rows="4" placeholder="E.g., Python, Networking, CTFs, etc."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="why">Why do you want to join Team Kavach?</label>
+                <textarea id="why" name="why" rows="4" placeholder="Your motivation or interest..."></textarea>
+            </div>
+
+            <button type="submit" class="cta-button">Submit Application</button>
+        </form>
+    </main>
+
+    <footer class="footer">
+        <p>Contact us:</p>
+        <p>Email: <a href="mailto:teamkavach@samplemail.com">teamkavach@samplemail.com</a></p>
+        <p>Instagram: <a href="https://instagram.com/teamkavach_demo" target="_blank">@teamkavach_demo</a></p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
